@@ -1,29 +1,24 @@
-import java.util.*;
-
 public class PalindromeCheckerApp {
+    public static void main(String[] args) {
+        PalindromeService service = new PalindromeService();
+        String input = "racecar";
+        boolean result = service.checkPalindrome(input);
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + result);
+    }
+}
 
-    static boolean isPalindrome(String str) {
-        int left = 0;
-        int right = str.length() - 1;
-
-        while (left < right) {
-            if (str.charAt(left) != str.charAt(right))
+class PalindromeService {
+    public boolean checkPalindrome(String input) {
+        int start = 0;
+        int end = input.length() - 1;
+        while (start < end) {
+            if (input.charAt(start) != input.charAt(end)) {
                 return false;
-            left++;
-            right--;
+            }
+            start++;
+            end--;
         }
         return true;
-    }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String input = sc.nextLine();
-
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
-
-        if (isPalindrome(normalized))
-            System.out.println("Palindrome");
-        else
-            System.out.println("Not a Palindrome");
     }
 }
