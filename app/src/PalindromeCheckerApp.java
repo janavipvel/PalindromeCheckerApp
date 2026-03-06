@@ -38,6 +38,13 @@ public class PalindromeCheckerApp {
         }
     }
 
+    static class StringBuilderStrategy implements PalindromeStrategy {
+        public boolean check(String input) {
+            String reversed = new StringBuilder(input).reverse().toString();
+            return input.equals(reversed);
+        }
+    }
+
     static class PalindromeChecker {
         private PalindromeStrategy strategy;
 
@@ -50,10 +57,24 @@ public class PalindromeCheckerApp {
         }
     }
 
+    static void benchmark(String name, PalindromeStrategy strategy, String input) {
+        long start = System.nanoTime();
+        boolean result = strategy.check(input);
+        long end = System.nanoTime();
+        long duration = end - start;
+
+        System.out.println("Strategy        : " + name);
+        System.out.println("Input           : " + input);
+        System.out.println("Is Palindrome?  : " + result);
+        System.out.println("Execution Time  : " + duration + " ns");
+        System.out.println("------------------------------------------");
+    }
+
     public static void main(String[] args) {
         String input = "level";
-        PalindromeChecker checker = new PalindromeChecker(new StackStrategy());
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + checker.check(input));
+
+        benchmark("StackStrategy", new StackStrategy(), input);
+        benchmark("DequeStrategy", new DequeStrategy(), input);
+        benchmark("StringBuilderStrategy", new StringBuilderStrategy(), input);
     }
 }
